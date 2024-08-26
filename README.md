@@ -1,5 +1,3 @@
-# try-vue
-
 ## Project setup
 ```
 npm install
