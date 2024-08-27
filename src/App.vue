@@ -2,9 +2,9 @@
   <v-app>
     <v-main>
       <v-container>
-        <div v-if="text.length > 0">
+        <div v-if="texts.length > 0">
           <text-editor 
-          :data="text"
+          :data="texts"
           @change="changeText"
           />
         </div>
@@ -16,18 +16,19 @@
 
 <script>
 import TextEditor from '@/features/TextEditor/components/TextEditor.vue'
+
 import axios from 'axios';
 
 export default {
   name: 'App',
 
   components: {
-    TextEditor
+    TextEditor,
   },
 
   data() {
     return {
-      text: []
+      texts: []
   }
   },
   methods: {
@@ -35,13 +36,13 @@ export default {
       try {
         const response = await axios.get('https://66cbaa844290b1c4f19ad4a3.mockapi.io/api/text/texts').then(res => res = res.data);
         
-        this.text = response
+        this.texts = response
       } catch (error) {
         console.log('Error fetching data', error);
       }
     },
     async changeText(payload) {
-      console.log(payload);
+      console.log('PAYLOAD', payload);
       try {
         const response = await axios.put(`https://66cbaa844290b1c4f19ad4a3.mockapi.io/api/text/texts/${payload.id}`, {
           text: payload.text, 
@@ -50,7 +51,7 @@ export default {
           alignment: payload.alignment,
         });
         
-        this.text = response
+        this.texts = response
       } catch (error) {
         console.log('Error changing data', error);
       }
